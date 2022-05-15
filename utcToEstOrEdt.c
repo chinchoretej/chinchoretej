@@ -10,10 +10,10 @@ void UTC_TO_EST_CONVERTER(char* dateField)
     struct tm day = { tm.tm_sec, tm.tm_min, tm.tm_hour,
                       tm.tm_mday, tm.tm_mon, tm.tm_year};    
     
-    DSF = IS_EST_OR_EDT(tm.tm_year, tm.tm_mon, tm.tm_mday, tm.tm_hour);
+    DSF = IS_EST_OR_EDT(tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday, tm.tm_hour);
     t1 = mktime(&day);
     
-    if(DSF)
+    if(DSF == 0)
     {
        //For Daylight Saving ON 
        t2 = t1 - (3600 * 4);
@@ -98,7 +98,7 @@ int IS_EST_OR_EDT(int year, int mon, int mday, int hour)
 }
 
 int main(){
-    char dateField[]={"2022-11-06T03:00:00Z"};
+    char dateField[]={"2022-11-06T01:00:00Z"};
     UTC_TO_EST_CONVERTER(dateField);
     printf("%s",dateField);
     return 0;
